@@ -2,11 +2,11 @@
 
 This is an Android library for Accessory Programming. It sits on top of the basic Android AOA Libraries, and implements the MQTT protocol for communicating with Arduino based accessories.
 
-## Author/s
+### Author/s
 
 This Library was written by Andreas Göransson and David Cuartielles for a book called Android Open Accessory Programming with Arduino.
 
-# Getting the library...
+## Getting the library...
 
 1. **Clone** this repository to your development machine
 2. From the Eclipse menu, select **New** -> **Project**
@@ -14,13 +14,13 @@ This Library was written by Andreas Göransson and David Cuartielles for a book c
 4. **Browse** to the cloned repository root folder on your machine
 5. Click **Finish**
 
-## If there are compilation errors
+### If there are compilation errors
 
 6. **Right-click** the **WroxAccessories** project in your Package Explorer and select 	**Properties**
 7. Set the **Build Target** to be **Google APIs** version **12**
 8. Click **OK**
 
-# Getting started with WroxAccessories for Android version 12 and above
+## Getting started with WroxAccessories for Android version 12 and above
 
 ### Adding WroxAccessory to an Android Project
 
