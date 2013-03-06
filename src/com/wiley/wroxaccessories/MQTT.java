@@ -235,7 +235,10 @@ public class MQTT {
 		int multiplier = 1;
 		int len = 0;
 		byte digit = 0;
+		// Used to keep track of where the payload starts
+		int headerOffset = 1;
 		do {
+			headerOffset++; // Incremend the payload
 			digit = message[i++];
 			len += (digit & 127) * multiplier;
 			multiplier *= 128;
@@ -266,9 +269,13 @@ public class MQTT {
 			mqtt.variableHeader.put("topic_name", protocol_name);
 			Log.i("MQTT", "  Protocol name: " + protocol_name);
 
-			int message_id = (message[i++] << 8 & 0xFF00 | message[i++] & 0xFF);
-			mqtt.variableHeader.put("message_id", Integer.toString(message_id));
-			Log.i("MQTT", "  Message id: " + message_id);
+			// Only read the message id if the QoS is above AT_MOST_ONCE
+			if (mqtt.QoS > AT_MOST_ONCE) {
+				int message_id = (message[i++] << 8 & 0xFF00 | message[i++] & 0xFF);
+				mqtt.variableHeader.put("message_id",
+						Integer.toString(message_id));
+				Log.i("MQTT", "  Message id: " + message_id);
+			}
 			break;
 		case SUBSCRIBE:
 			mqtt.variableHeader.put("message_id", (message[i++] << 8 | message[i++]));
@@ -278,10 +285,12 @@ public class MQTT {
 		}
 
 		ByteArrayOutputStream payload = new ByteArrayOutputStream();
-		for (int b = i; b < message.length; b++)
+		// Don't include any of the headers in the payload
+		for (int b = i; b < headerOffset + mqtt.remainingLength; b++)
 			payload.write(message[b]);
+		
 		mqtt.payload = payload.toByteArray();
-
+		
 		return mqtt;
 	}
 }
