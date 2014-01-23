@@ -90,7 +90,7 @@ public class WroxAccessory {
 		protected Void doInBackground(byte[]... params) {
 			try {
 				mMonitoringThread.mConnection.getOutputStream().write(params[0]);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
@@ -116,7 +116,7 @@ public class WroxAccessory {
 			while (ret >= 0) {
 				try {
 					ret = mConnection.getInputStream().read(buffer);
-				} catch (IOException e) {
+				} catch (Exception e) {
 					break;
 				}
 
